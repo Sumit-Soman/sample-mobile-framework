@@ -1,5 +1,6 @@
 package com.wallet.tests;
 
+import com.wallet.utils.PasscodeManager;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
@@ -18,7 +19,9 @@ public class CreateWalletTest extends BaseTest {
     @Description("Create a new wallet and buy BTC")
     @Severity(CRITICAL)
     public void CreateAndBuyBTC() {
-        createNewWalletPage.createNewWallet();
+        String passcode = PasscodeManager.generatePasscode();
+
+        createNewWalletPage.createNewWallet(passcode);
         Assert.assertTrue(mainWalletPage.buyCrypto("BTC", "100"));
     }
 

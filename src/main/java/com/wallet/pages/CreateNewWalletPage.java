@@ -26,12 +26,12 @@ public class CreateNewWalletPage extends BasePage{
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"secretPhraseCreateButton\")")
     private WebElement createSecretPhaseBtn;
 
-    public void createNewWallet() {
+    public void createNewWallet(String passcode) {
         try{
             checkForSecurityBtn();
             createNewWalletBtn.click();
-            enterPasscode("980000");
-            enterPasscode("980000");
+            enterPasscode(passcode);
+            enterPasscode(passcode);
 
             closeNotificationDialog.click();
             createSecretPhrase();
