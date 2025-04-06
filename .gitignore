@@ -1,5 +1,8 @@
 .idea
-allure-reults
+allure-results
 allure-report
 logs/*
 target
+sample-mobile-framework.iml
+apps/
+logs/
