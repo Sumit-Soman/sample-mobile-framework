@@ -6,3 +6,4 @@ target
 sample-mobile-framework.iml
 apps/
 logs/
+.DS_Store

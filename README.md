@@ -4,8 +4,8 @@
 
 ### Prerequisites
 1. Install **Java 11 or higher** on your system.
-2. Install **Maven** for dependency management.
-3. Install **Appium** globally using npm:
+2. Install **Appium**
+3. Install **Android Studio** and start the emulator
 
 ### Starting Appium Server
 Start the Appium server using the following command:
@@ -14,7 +14,23 @@ appium
 ```
 This will start the server on the default port (4723). Ensure the server is running before executing tests.
 
----
+### Starting the Emulator
+To start the Android emulator, use the following command:
+```bash
+emulator -avd <emulator_name>
+```
+Replace `<emulator_name>` with the name of your configured emulator. Ensure that the emulator is running before executing tests.
+
+
+### Adding the TrustWallet App
+
+Before starting the tests, ensure that the **TrustWallet** app is added to the `apps` folder. The path to the `apps` folder is configured in the `config.properties` file.
+
+To add the app:
+1. Download the TrustWallet APK file.
+2. Place the APK file in the folder specified by the `appPath` property in `config.properties`.
+
+Ensure the `appPath` points to the correct location of the TrustWallet APK before running the tests.
 
 ## Running Tests
 
@@ -30,6 +46,29 @@ The project uses `testng.xml` for test execution. To run tests defined in `testn
 mvn test -DsuiteXmlFile=testng.xml
 ```
 
+### Generating Allure Reports
+
+The project supports **Allure** for generating detailed and interactive test reports. To generate the Allure report after running the tests, follow these steps:
+
+1. Ensure that Allure is installed on your system. You can install it using:
+    ```bash
+    npm install -g allure-commandline --save-dev
+    ```
+
+2. After executing the tests, generate the Allure report using the following command:
+    ```bash
+    allure serve allure-results
+    ```
+    This will start a local server and open the Allure report in your default browser.
+
+### Cleanup Command
+
+To clean up the project and remove temporary files, use the following Maven command:
+```bash
+mvn clean
+```
+This will delete all files generated during the build and test execution, ensuring a fresh start for subsequent runs.
+
 ---
 
 ## Configuration
@@ -41,9 +80,13 @@ The project includes a `config.properties` file that contains all emulator and d
 
 Example:
 ```properties
-deviceName=Pixel_4_API_30
-platformVersion=11.0
-appPath=/path/to/your/app.apk
+# Android Device Configuration
+platform.name=Android
+automation.name=UiAutomator2
+device.name=emulator-5554
+platform.version=12.0
+app.path=apps/TrustWallet.apk
+app.package=com.wallet.crypto.trustapp
 ```
 
 ---
