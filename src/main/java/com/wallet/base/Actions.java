@@ -17,11 +17,12 @@ public class Actions {
     private static final Logger logger = LogManager.getLogger(Actions.class);
 
     public Actions() {
+
         this.driver = DriverManager.getDriver();
+        this.wait =  DriverManager.getWait();
     }
     public boolean elementIsDisplayed(WebElement locator) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             return wait.until(ExpectedConditions.visibilityOf(locator)).isDisplayed();
         } catch (TimeoutException e) {
             return false;
@@ -57,15 +58,6 @@ public class Actions {
         } catch (Exception e) {
             logger.error("Failed to get text from element: {}", element, e);
             throw new CustomExceptions("Text fetch failed", e);
-        }
-    }
-
-    public void waitInSeconds(int seconds) {
-        try {
-            Thread.sleep(seconds * 1000L);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            logger.warn("Interrupted while waiting", e);
         }
     }
 

@@ -16,8 +16,8 @@ public class DriverManager {
     private static AppiumDriver driver;
     private static final Logger logger = LogManager.getLogger(DriverManager.class);
 //    private static final ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
-    private static final ThreadLocal<WebDriverWait> wait = new ThreadLocal<>();
-
+//    private static final ThreadLocal<WebDriverWait> wait = new ThreadLocal<>();
+    private static WebDriverWait wait;
     public static void initializeDriver() {
         UiAutomator2Options capabilities = new UiAutomator2Options()
             .setPlatformName(ConfigReader.get("platform.name"))
@@ -32,6 +32,8 @@ public class DriverManager {
             driver = new AppiumDriver(new URL(ConfigReader.get("appium.server.host")+ ":" + ConfigReader.get("appium.server.port") + "/"), capabilities);
             driver.manage().timeouts().implicitlyWait(
                     Duration.ofSeconds(Long.parseLong(ConfigReader.get("implicit.wait"))));
+            wait = new WebDriverWait(driver,
+                    Duration.ofSeconds(Long.parseLong(ConfigReader.get("explicit.wait"))));
         } catch (MalformedURLException e) {
             throw new RuntimeException("Appium server URL is invalid", e);
         }
@@ -42,6 +44,10 @@ public class DriverManager {
             throw new IllegalStateException("Driver not initialized. Please call initializeDriver first.");
         }
         return driver;
+    }
+
+    public static WebDriverWait getWait() {
+        return wait;
     }
 
     public static void quitDriver() {
